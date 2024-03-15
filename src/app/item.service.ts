@@ -9,10 +9,15 @@ import { firstValueFrom } from 'rxjs';
 export class ItemService {
   constructor(private readonly http: HttpClient) {}
 
-  get items(): Promise<Item[]> {
-    return firstValueFrom(
-      this.http.get<Item[]>("https://boolean-api-server.fly.dev/groceries?type=vegetable")
-    )
+  getVegetablesFruits(): Promise<Item[]>
+  {
+    const vegetables = this.http.get<Item[]>
+    ('https://boolean-api-server.fly.dev/groceries?type=vegetable');
+
+    const fruits = this.http.get<Item[]>
+    ('https://boolean-api-server.fly.dev/groceries?type=fruit');
+
+    return Promise.all([firstValueFrom(vegetables), firstValueFrom(fruits)]).then(([vegetables, fruits]) => {return [...vegetables, ...fruits]; });
   }
 
   // Local functions

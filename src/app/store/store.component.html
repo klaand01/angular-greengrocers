@@ -4,7 +4,8 @@
     <button (click)="onSortByName()">Sort by Name</button>
     <button (click)="onFilterByType()">Filter by Type</button>
     <ul class="item-list store--item-list">
-        <li *ngFor="let item of sortedItems">
+        <li *ngFor="let item of items | async">
+        <!-- <li *ngFor="let item of sortedItems"> -->
             <div class="store--item-icon">
                 <img src="assets/icons/{{item.id}}.svg" alt="{{item.name}}" />
             </div>

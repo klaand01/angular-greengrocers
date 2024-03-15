@@ -8,13 +8,8 @@ import { Item } from '../models/item';
   styleUrls: ['./store.component.css']
 })
 export class StoreComponent {
-  items = this.itemService.items
-  sortedItems: Array<any> = []
-  
-  constructor(private readonly itemService: ItemService) 
-  {
-    this.items.then(itemArr => this.sortedItems = itemArr)
-  }
+  items: Promise<Item[]> = this.itemService.getVegetablesFruits()
+  constructor(private readonly itemService: ItemService) {}
 
   onAddToCart(item: Item): void
   {
@@ -23,16 +18,16 @@ export class StoreComponent {
 
   onSortByPrice(): void
   {
-    this.items.then(itemArr => this.sortedItems = itemArr.sort((a, b) => a.price - b.price))
+    this.items.then(itemArr => itemArr.sort((a, b) => a.price - b.price))
   }
 
   onSortByName(): void
   {
-    this.items.then(itemArr => this.sortedItems = itemArr.sort((a, b) => a.name.localeCompare(b.name)))
+    this.items.then(itemArr => itemArr.sort((a, b) => a.name.localeCompare(b.name)))
   }
 
   onFilterByType(): void
   {
-    this.items.then(itemArr => this.sortedItems = itemArr.sort((a, b) => a.id.localeCompare(b.id)))
+    this.items = this.itemService.getVegetablesFruits()
   }
 }
